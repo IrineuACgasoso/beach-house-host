@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Ajustes para o react-calendar se misturar bem com o Tailwind */
+.react-calendar {
+  border: none !important;
+  font-family: inherit !important;
+  width: 100% !important;
+}
+
+.react-calendar__tile {
+  padding: 12px 8px !important;
+  transition: all 0.2s;
+}
+
+.react-calendar__navigation button {
+  font-weight: bold;
+  color: #0e7490; /* cyan-700 */
+  font-size: 1.1rem;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #ecfeff !important; /* cyan-50 */
+  border-radius: 8px;
+}
