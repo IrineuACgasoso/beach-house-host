@@ -5,9 +5,10 @@
    Aqui o VS Code VAI exibir os quadradinhos coloridos para você clicar e mudar! 🎨 */
 :root {
   --raw-verde-casa: #2C4C3B;
+  --raw-onda-casa: #4A9087;
+  --raw-azul-calendar: #7AC5FF;
   --raw-areia-casa: #C69C6D;
   --raw-areia-bg: #fff2e4;
-  --raw-onda-casa: #4A9087;
   --raw-verde-claro: #EAF0EB;
   --raw-areia-clara: #FCFAF6;
   --raw-onda-clara: #E3EFEF;
@@ -26,29 +27,6 @@
 
   --color-areia-bg: var(--raw-areia-bg);
 
-}
+  --color-azul-calendar: var(--raw-azul-calendar)
 
-/* ... o resto do seu código do calendário continua aqui embaixo normal ... */
-/* Ajustes para o react-calendar se misturar bem com o Tailwind */
-.react-calendar {
-  border: none !important;
-  font-family: inherit !important;
-  width: 100% !important;
-}
-
-.react-calendar__tile {
-  padding: 12px 8px !important;
-  transition: all 0.2s;
-}
-
-.react-calendar__navigation button {
-  font-weight: bold;
-  color: #0e7490; /* cyan-700 */
-  font-size: 1.1rem;
-}
-
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #ecfeff !important; /* cyan-50 */
-  border-radius: 8px;
 }

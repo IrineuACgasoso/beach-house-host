@@ -7,7 +7,7 @@ export default function InfoCasa() {
     { 
       icone: <BedDouble className="w-5 h-5 text-onda-casa" />, texto: "5 quartos (sendo 2 suítes)" },
     { icone: <Waves className="w-5 h-5 text-onda-casa" />, texto: "Piscina privativa & Espaço Gourmet com Churrasqueira" },
-    { icone: <Snowflake className="w-5 h-5 text-onda-casa" />, texto: "Ambientes climatizados (Ar-condicionado nos quartos)" },
+    { icone: <Snowflake className="w-5 h-5 text-onda-casa" />, texto: "Ambientes climatizados (Ar-condicionado nos quartos e sala)" },
     { icone: <Tv className="w-5 h-5 text-onda-casa" />, texto: "Smart TV com acesso a aplicativos de streaming" },
     { icone: <Wifi className="w-5 h-5 text-onda-casa" />, texto: "Conexão Wi-Fi de alta velocidade (Ideal para Home Office)" },
     { icone: <ShieldCheck className="w-5 h-5 text-onda-casa" />, texto: "Localizada em condomínio fechado com segurança 24h" },

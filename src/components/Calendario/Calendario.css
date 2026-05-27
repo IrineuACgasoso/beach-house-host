@@ -1,0 +1,152 @@
+/* * FUNÇÃO DO PARÁGRAFO: Controla o visual completo dos dias ocupados na API. 
+ * Aplica um fundo vermelho suave legível, desabilita cliques e altera o cursor do mouse.
+ */
+/* Força a estilização de dias reservados (Evita que o CSS nativo quebre dias de semana) */
+.custom-calendar-wrapper .tile-reservado {
+  background-color: #fef2f2 !important; /* Tailwind red-50 */
+  color: #991b1b !important;            /* Tailwind red-800 */
+  font-weight: 600 !important;
+  border: 1px solid rgba(254, 235, 235, 0.6) !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Trava de segurança visual. Impede que o navegador tente 
+ * aplicar efeitos de hover ou acender o fundo de um dia que já está reservado.
+ */
+/* Garante que ao passar o mouse por cima de um dia desabilitado ele não mude de cor */
+.custom-calendar-wrapper .tile-reservado:hover {
+  background-color: #fef2f2 !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Reseta a pintura padrão azul-escura da biblioteca. 
+ * Sem isso, o componente aplica fundos conflitantes nas datas selecionadas.
+ */
+/* Remove os fundos azuis e bizarros padrões da biblioteca */
+.react-calendar__tile--active {
+  background: none !important;
+  color: inherit !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Estiliza o "miolo" do seu intervalo de viagem. 
+ * Usa cantos retos (0px) para criar o efeito visual de bloco contínuo que emenda com os vizinhos.
+ */
+/* 1. Dias INTERMEDIÁRIOS do intervalo (Mais claros e conectados) */
+/* Aumentamos a especificidade adicionando o container do mês para garantir o bloco contínuo */
+.custom-calendar-wrapper .react-calendar__month-view__days button.react-calendar__tile--range {
+  background-color: #ccfbf1 !important; /* Tailwind teal-100 */
+  color: #0f172a !important;            /* Tailwind slate-900 */
+  border-radius: 0px !important;        /* Força bloco contínuo por padrão no intervalo */
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Determina a cor do dia de Check-in e força o fechamento 
+ * arredondado exclusivamente do lado esquerdo do bloco (Início da linha).
+ */
+/* 2. O dia de CHECK-IN (Início) - Ativado apenas quando um intervalo completo está fechado */
+.custom-calendar-wrapper.has-range-selected .react-calendar__month-view__days button.react-calendar__tile.react-calendar__tile--rangeStart {
+  background-color: #065f46 !important; /* Tailwind emerald-800 */
+  color: #ffffff !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  overflow: hidden !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Determina a cor do dia de Check-out e força o fechamento 
+ * arredondado exclusivamente do lado direito do bloco (Fim da linha).
+ */
+/* 3. O dia de CHECK-OUT (Fim) - Separado por quinas para evitar bugs de shorthand */
+.custom-calendar-wrapper.has-range-selected .react-calendar__month-view__days button.react-calendar__tile.react-calendar__tile--rangeEnd {
+  background-color: #065f46 !important; /* Tailwind emerald-800 */
+  color: #ffffff !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  overflow: hidden !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Regra de exceção. Se o usuário clicou apenas no Check-in, 
+ * transforma o bloco em um quadrado totalmente arredondado perfeito, sem pontas retas sobressalentes.
+ */
+/* Caso o usuário tenha clicado apenas no Check-in (ou check-in e out no mesmo dia) */
+.custom-calendar-wrapper.is-selecting-checkout .react-calendar__month-view__days button.react-calendar__tile.react-calendar__tile--rangeStart,
+.custom-calendar-wrapper .react-calendar__month-view__days button.react-calendar__tile.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd {
+  background-color: #065f46 !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Remove as bordas originais de tabela da biblioteca, 
+ * herda a fonte do projeto e expande o calendário para preencher o card.
+ */
+.react-calendar {
+  border: none !important;
+  font-family: inherit !important;
+  width: 100% !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Configura a área interna de clique e espaçamento de cada 
+ * dia do mês, adicionando uma transição suave para as animações de hover.
+ */
+/* Base de todos os dias */
+.react-calendar__tile {
+  padding: 12px 6px !important;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Estiliza o menu de navegação de meses (título e setas). 
+ * Aplica o verde principal da casa e cria cantos suaves no hover dos botões ativos.
+ */
+/* Botões de Navegação Superior */
+.react-calendar__navigation button {
+  color: #0f766e !important; /* Tailwind teal-700 */
+  font-weight: bold;
+  font-size: 1rem;
+}
+.react-calendar__navigation button:enabled:hover {
+  background-color: #f0fdfa !important; /* Tailwind teal-50 */
+  border-radius: 8px;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Impede que o calendário nativo tinja os finais de semana 
+ * com cores padrão (como vermelho chamativo), padronizando o contraste e a leitura.
+ */
+/* Corrige finais de semana para cor neutra */
+.react-calendar__month-view__days__day--weekend {
+  color: #334155 !important; /* Tailwind slate-700 */
+}
+.react-calendar__month-view__days__day--weekend.bg-red-50 {
+  color: #b91c1c !important; /* Tailwind red-700 */
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Destaca sutilmente a data do dia de hoje utilizando tons 
+ * quentes de praia (areia e âmbar) para guiar a linha do tempo do usuário.
+ */
+/* COR DO DIA ATUAL NO CALENDÁRIO */
+.react-calendar__tile--now {
+  background-color: #fef3c7 !important; /* Tailwind amber-100 */
+  color: #b45309 !important;            /* Tailwind amber-700 */
+  font-weight: bold;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Cria o efeito de iluminação esmeralda ao passar o mouse 
+ * e REMOVE o bug do fundo cinza escuro no 3º clique.
+ */
+/* Hover de seleção natural */
+.react-calendar__tile:enabled:hover {
+  background-color: #ecfdf5 !important; /* Tailwind emerald-50 */
+  border-radius: 12px;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Aumenta a especificidade para neutralizar o fundo cinza-escuro nativo do react-calendar que fica preso no 3º clique (estado de focus/active) e remove o outline padrão.
+ */
+/* Força a neutralização dos estilos de foco e ativo nativos da biblioteca */
+.custom-calendar-wrapper .react-calendar__tile:enabled:focus,
+.custom-calendar-wrapper .react-calendar__tile:enabled:active {
+  background-color: transparent !important;
+  outline: none !important;
+}
