@@ -1,5 +1,34 @@
+/* src/index.css */
 @import "tailwindcss";
 
+/* 1. O TRUQUE VISUAL: Declarando no :root padrão do CSS.
+   Aqui o VS Code VAI exibir os quadradinhos coloridos para você clicar e mudar! 🎨 */
+:root {
+  --raw-verde-casa: #2C4C3B;
+  --raw-areia-casa: #C69C6D;
+  --raw-areia-bg: #fff2e4;
+  --raw-onda-casa: #4A9087;
+  --raw-verde-claro: #EAF0EB;
+  --raw-areia-clara: #FCFAF6;
+  --raw-onda-clara: #E3EFEF;
+}
+
+/* 2. O LINK DO TAILWIND: O @theme apenas puxa os valores lá de cima.
+   Dessa forma você mantém as classes (ex: text-verde-casa) funcionando perfeitamente. */
+@theme {
+  --color-verde-casa: var(--raw-verde-casa);
+  --color-areia-casa: var(--raw-areia-casa);
+  --color-onda-casa: var(--raw-onda-casa);
+
+  --color-verde-claro: var(--raw-verde-claro);
+  --color-areia-clara: var(--raw-areia-clara);
+  --color-onda-clara: var(--raw-onda-clara);
+
+  --color-areia-bg: var(--raw-areia-bg);
+
+}
+
+/* ... o resto do seu código do calendário continua aqui embaixo normal ... */
 /* Ajustes para o react-calendar se misturar bem com o Tailwind */
 .react-calendar {
   border: none !important;
