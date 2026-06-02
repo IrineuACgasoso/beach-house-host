@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import { Calendar as CalendarIcon, Loader2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Loader2, ArrowRight } from 'lucide-react';
 
 import { buscarDatasReservadas } from '../../services/googleCalendar';
 import { verificarDiaDesabilitado, obterClasseDoAzulejo } from '../../services/calendarRules';
 
 import CheckInOut from './CheckInOut';
 import LegendaCalendario from './LegendaCalendario';
+import FormularioReserva from './FormularioReserva'; // <--- NOVO IMPORT
 
 // OBRIGATÓRIO: Estilos nativos primeiro, estilos customizados por ÚLTIMO para garantir precedência
 import 'react-calendar/dist/Calendar.css';
@@ -16,6 +17,9 @@ export default function Calendario() {
   const [periodoSelecionado, setPeriodoSelecionado] = useState([null, null]);
   const [datasReservadas, setDatasReservadas] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  
+  // NOVO ESTADO: Controla se mostramos o calendário ou o formulário
+  const [exibirFormulario, setExibirFormulario] = useState(false);
 
   useEffect(() => {
     async function carregarDatas() {
@@ -34,26 +38,21 @@ export default function Calendario() {
   const handleDiaClicado = (date) => {
     const [inicio, fim] = periodoSelecionado;
     
-    // CLIQUE 3: Se já temos início e fim preenchidos, qualquer clique limpa o estado (RESET completo)
     if (inicio && fim) {
       setPeriodoSelecionado([null, null]);
       return;
     }
     
-    // CLIQUE 1: Se está totalmente zerado, define o Check-in
     if (!inicio) {
       setPeriodoSelecionado([date, null]);
       return;
     }
     
-    // Se já tem início mas não tem fim (Aguardando o segundo clique)
     if (inicio && !fim) {
-      // ROTA DE FUGA: Se clicar no mesmo dia do Check-in, cancela e reseta tudo
       if (date.getTime() === inicio.getTime()) {
         setPeriodoSelecionado([null, null]);
         return;
       }
-      // CLIQUE 2: Define o Check-out
       setPeriodoSelecionado([inicio, date]);
     }
   };
@@ -61,39 +60,66 @@ export default function Calendario() {
   const [dataInicio, dataFim] = periodoSelecionado || [null, null];
 
   return (
-    <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg border border-teal-100 relative flex flex-col gap-5">
-      <div>
-        <div className="flex items-center gap-2 mb-2 text-teal-800">
-          <CalendarIcon className="w-5 h-5 text-amber-600" />
-          <h2 className="text-xl font-bold">Calendário de Reservas</h2>
-        </div>
-        <p className="text-xs text-slate-500">
-          Selecione a data de chegada e de saída para planejar sua estadia na Casa 210.
-        </p>
-      </div>
-
-      {carregando ? (
-        <div className="flex flex-col items-center justify-center h-[285px] text-teal-600 gap-2">
-          <Loader2 className="w-8 h-8 animate-spin" />
-          <p className="text-xs font-medium text-slate-400">Sincronizando com o Google Agenda...</p>
-        </div>
+    <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg border border-teal-100 relative flex flex-col gap-5 overflow-hidden">
+      
+      {/* Se exibirFormulario for verdadeiro, renderiza apenas o form */}
+      {exibirFormulario ? (
+        <FormularioReserva 
+          dataInicio={dataInicio} 
+          dataFim={dataFim} 
+          onVoltar={() => {
+            setExibirFormulario(false);
+            setPeriodoSelecionado([null, null]); // Opcional: limpa as datas ao voltar
+          }} 
+        />
       ) : (
-        /* Injetamos dinamicamente o estado da seleção no wrapper do CSS */
-        <div className={`custom-calendar-wrapper ${dataInicio && !dataFim ? 'is-selecting-checkout' : ''} ${dataInicio && dataFim ? 'has-range-selected' : ''}`}>
-          <Calendar
-            onClickDay={handleDiaClicado}
-            value={dataInicio}
-            selectRange={false}
-            tileClassName={(props) => obterClasseDoAzulejo(props, datasReservadas, periodoSelecionado)}
-            tileDisabled={(props) => verificarDiaDesabilitado(props, datasReservadas, periodoSelecionado)}
-            minDate={new Date()}
-            locale="pt-BR"
-          />
-        </div>
-      )}
+        /* Caso contrário, renderiza o calendário original */
+        <>
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-teal-800">
+              <CalendarIcon className="w-5 h-5 text-amber-600" />
+              <h2 className="text-xl font-bold">Calendário de Reservas</h2>
+            </div>
+            <p className="text-xs text-slate-500">
+              Selecione a data de chegada e de saída para planejar sua estadia na Casa 210.
+            </p>
+          </div>
 
-      <CheckInOut dataInicio={dataInicio} dataFim={dataFim} />
-      <LegendaCalendario />
+          {carregando ? (
+            <div className="flex flex-col items-center justify-center h-[285px] text-teal-600 gap-2">
+              <Loader2 className="w-8 h-8 animate-spin" />
+              <p className="text-xs font-medium text-slate-400">Sincronizando com o Google Agenda...</p>
+            </div>
+          ) : (
+            <div className={`custom-calendar-wrapper ${dataInicio && !dataFim ? 'is-selecting-checkout' : ''} ${dataInicio && dataFim ? 'has-range-selected' : ''}`}>
+              <Calendar
+                onClickDay={handleDiaClicado}
+                value={dataInicio && dataFim ? [dataInicio, dataFim] : dataInicio}
+                selectRange={false}
+                tileClassName={(props) => obterClasseDoAzulejo(props, datasReservadas, periodoSelecionado)}
+                tileDisabled={(props) => verificarDiaDesabilitado(props, datasReservadas, periodoSelecionado)}
+                minDate={new Date()}
+                locale="pt-BR"
+              />
+            </div>
+          )}
+
+          <CheckInOut dataInicio={dataInicio} dataFim={dataFim} />
+          
+          {/* NOVO: Botão que aparece apenas quando o check-in e check-out estão preenchidos */}
+          {dataInicio && dataFim && (
+            <button 
+              onClick={() => setExibirFormulario(true)}
+              className="w-full py-3 bg-amber-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-700 transition-colors animate-in fade-in zoom-in duration-300 shadow-md"
+            >
+              Continuar para Reserva
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          )}
+
+          <LegendaCalendario />
+        </>
+      )}
     </div>
   );
 }

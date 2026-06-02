@@ -1,11 +1,12 @@
 import { VolumeX, Trash2, Zap, HeartHandshake, Info } from 'lucide-react';
+import { PetProibido } from '../utils/emojiCreator';
 
 export default function RegrasCasa() {
   const regras = [
     {
       icone: <VolumeX className="w-6 h-6 text-onda-casa shrink-0" />,
       titulo: "Lei do Silêncio",
-      texto: "Pedimos a gentileza de respeitar o horário de silêncio após as 22h, garantindo a tranquilidade do condomínio e dos vizinhos."
+      texto: "Pedimos a gentileza de respeitar as regras de convivência na questão do silêncio, garantindo a tranquilidade do condomínio e dos vizinhos."
     },
     {
       icone: <Zap className="w-6 h-6 text-onda-casa shrink-0" />,
@@ -13,9 +14,14 @@ export default function RegrasCasa() {
       texto: "Ajude-nos a preservar o meio ambiente! Lembre-se de desligar os ares-condicionados e as luzes sempre que sair da casa."
     },
     {
+      icone: <PetProibido className="w-6 h-6 text-onda-casa shrink-0" />,
+      titulo: "Proibido Pets",
+      texto: "Adoramos todos os bichinhos, mas para manter o padrão de limpeza e garantir o conforto de todos os hóspedes e vizinhos, não acomodamos pets."
+    },
+    {
       icone: <Trash2 className="w-6 h-6 text-onda-casa shrink-0" />,
       titulo: "Coleta de Lixo",
-      texto: "Mantenha o ambiente limpo. Ao final da estadia, pedimos que todo o lixo seja recolhido e depositado nas lixeiras do condomínio."
+      texto: "Mantenha o ambiente limpo. Ao final da estadia, pedimos que todo o lixo seja recolhido e depositado nas lixeiras do condomínio, respeitando a divisão de recicláveis e não recicláveis."
     },
     {
       icone: <HeartHandshake className="w-6 h-6 text-onda-casa shrink-0" />,

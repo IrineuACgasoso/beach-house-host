@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header'
 import Calendario from './components/Calendario/index'
 import InfoCasa from './components/InfoCasa'
+import Guia from './components/Guia/Guia'
 import RegrasCasa from './components/RegrasCasa'
 import BotaoWhatsApp from './components/BotaoWhatsApp'
 import Galeria from './components/Galeria'
@@ -24,6 +25,8 @@ function App() {
           <InfoCasa />
 
           <RegrasCasa />
+
+          <Guia />
 
         </div>
 

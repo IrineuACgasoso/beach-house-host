@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .env
+
+casa-210-301a4bc8102c.json
+
+.vercel

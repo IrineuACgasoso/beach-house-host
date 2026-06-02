@@ -150,3 +150,49 @@
   background-color: transparent !important;
   outline: none !important;
 }
+
+/* * FUNÇÃO DO PARÁGRAFO: Controla o visual do ícone de confirmação (Check). 
+ * Substitui o verde genérico do sistema pelo verde esmeralda oficial da casa.
+ */
+.sucesso-icon {
+  color: #065f46 !important; /* Mesmo Emerald-800 do Check-in */
+  fill: #065f46 !important;
+  margin-bottom: 16px;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Estiliza o título principal "Pedido Enviado!".
+ * Aplica o verde esmeralda e ajusta o peso da fonte para dar destaque e elegância.
+ */
+.sucesso-titulo {
+  color: #065f46 !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Destaca as datas escolhidas pelo hóspede no texto.
+ * Usa o tom âmbar/laranja do dia atual para criar contraste e facilitar a leitura.
+ */
+.sucesso-datas {
+  color: #b45309 !important; /* Mesmo Amber-700 do dia atual */
+  font-weight: bold !important;
+}
+
+/* * FUNÇÃO DO PARÁGRAFO: Padroniza o botão de retorno, aplicando o laranja da casa
+ * e adicionando uma transição suave para escurecer a cor quando o usuário passa o mouse.
+ */
+.sucesso-botao {
+  background-color: #d97706 !important; /* Laranja padrão da Casa 210 */
+  color: #ffffff !important;
+  border: none !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  font-weight: bold !important;
+  transition: background-color 0.2s ease !important;
+  cursor: pointer !important;
+  margin-top: 20px;
+  width: 100%;
+}
+.sucesso-botao:hover {
+  background-color: #b45309 !important; /* Tom mais escuro (Amber-700) no hover */
+}
