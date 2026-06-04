@@ -18,6 +18,11 @@ export default function Gastronomia({ onVoltar }) {
       nome: "Rei das Coxinhas Peroba",
       descricao: "Perfeito para lanchar ou tomar café da manhã. E o melhor: é só atravessar a rua do condomínio e você já chegou.",
       acao: "MAPS_REI_DAS_COXINHAS"
+    },
+    {
+      nome: "Restaurante Manoa Beach Club",
+      descricao: "Outra incrível pizzaria da região de Barra Grande, ótima para passar a tarde à beira mar.",
+      acao: "MAPS_MANOA"
     }
   ];
 

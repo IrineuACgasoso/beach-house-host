@@ -1,10 +1,11 @@
 // api/reservar.js
 import * as dotenv from 'dotenv';
 import { google } from 'googleapis';
-import { Resend } from 'resend';
 import { gerarTemplateEmailReserva } from '../src/utils/templateEmail.js';
 
 dotenv.config();
+
+// 💡 Removemos o "new Resend()" daqui de cima.
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
   try {
     const { nome, email, telefone, observacoes, dataInicio, dataFim } = req.body;
 
-    // Autenticação com o Google
+    // ... (Seu código de autenticação do Google e inserção na agenda continua IGUAL aqui) ...
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.CLOUD_RESERVE_MANAGER_MAIL,
@@ -26,13 +27,9 @@ export default async function handler(req, res) {
       },
       scopes: ['https://www.googleapis.com/auth/calendar.events'],
     });
-
     const calendar = google.calendar({ version: 'v3', auth });
-
     const dataCheckin = new Date(dataInicio).toISOString().split('T')[0];
     const dataCheckout = new Date(dataFim).toISOString().split('T')[0];
-
-    // Montando o evento da agenda
     const evento = {
       summary: `🏠 Reserva: ${nome}`,
       description: `📞 WhatsApp: ${telefone}\n✉️ E-mail: ${email}\n📝 Obs: ${observacoes || 'Nenhuma'}`,
@@ -40,16 +37,14 @@ export default async function handler(req, res) {
       end: { date: dataCheckout },
       colorId: '2',
     };
-
-    // Insere no Google Agenda
     const googleResponse = await calendar.events.insert({
       calendarId: process.env.VITE_GOOGLE_CALENDAR_ID,
       requestBody: evento,
     });
-
     console.log("✅ Reserva criada no Google Agenda!");
 
-    // Monta e dispara o e-mail de aviso
+
+    // 🔄 NOVA ABORDAGEM: DISPARO DE E-MAIL COM FETCH PURO (À prova de Windows)
     const numeroLimpo = telefone.replace(/\D/g, ''); 
     const linkWhatsAppDoCliente = `https://wa.me/${numeroLimpo.startsWith('55') ? numeroLimpo : '55' + numeroLimpo}`;
 
@@ -73,7 +68,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'Casa 210 <onboarding@resend.dev>',
-        to: ['caioac2006@gmail.com'], // 👈 Lembrar de manter o seu e-mail do cadastro aqui
+        to: [process.env.RESEND_TO_EMAIL],
         subject: `🚨 Nova Solicitação de Reserva: ${nome}`,
         html: htmlDoEmail,
       }),
