@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 
 // 1. ATENÇÃO: Certifique-se de que o import aponta para o novo arquivo .png
-import logoPng from '../assets/image.png' 
+import logoPng from '../assets/headerLogo.png' 
 import backgroundMaragogi from '../assets/maragogi-bg.jpeg'
 
 export default function Header() {
