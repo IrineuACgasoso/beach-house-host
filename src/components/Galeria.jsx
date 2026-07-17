@@ -7,7 +7,11 @@ import quarto1Pic from '../assets/galeria/quarto1.png';
 import quarto2Pic from '../assets/galeria/quarto2.png';
 import quarto3Pic from '../assets/galeria/quarto3.png';
 import suitePic from '../assets/galeria/suite.png';
+import kitnetPic from '../assets/galeria/kitnet.jpg'
 import churrasqueiraPic from '../assets/galeria/churrasqueira.png';
+import poolPic from '../assets/galeria/pool.jpg'
+import quintal1Pic from '../assets/galeria/quintal1.jpg'
+import quintal2Pic from '../assets/galeria/quintal2.jpg'
 import upperviewPic from '../assets/galeria/upperview.png';
 import varandaPic from '../assets/galeria/varanda.png';
 
@@ -22,7 +26,11 @@ export default function Galeria() {
     quarto2Pic,
     quarto3Pic,
     suitePic,
+    kitnetPic,
     churrasqueiraPic,
+    poolPic,
+    quintal1Pic,
+    quintal1Pic,
     upperviewPic,
     varandaPic
   ];
